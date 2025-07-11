@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using ShowroomService.Domain.Common;
 using ShowroomService.Domain.Enums;
 
@@ -46,7 +44,8 @@ namespace ShowroomService.Domain.Entities
                 PhoneNumber = phone,
                 Status = status ?? ShowroomStatus.Closed,
                 OperatingHours = operatingHours ?? "9:00 AM - 7:00 PM",
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
         }
 
