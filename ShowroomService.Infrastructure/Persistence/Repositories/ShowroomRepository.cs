@@ -20,6 +20,14 @@ namespace ShowroomService.Infrastructure.Persistence.Repositories
                                    .FirstOrDefaultAsync(v => v.Alias == normalizedAlias, cancellationToken);
         }
 
+
+        public async Task<bool> ExistsWithAddressAsync(string address, string city, string country, CancellationToken cancellationToken)
+        {
+            return await dbContext.Showrooms.AnyAsync(s => 
+                s.Address == address && s.City == city && s.Country == country, 
+                cancellationToken);
+}
+
         public async Task<IEnumerable<Showroom>> ListAllAsync(CancellationToken cancellationToken = default)
         {
             return await dbContext.Showrooms

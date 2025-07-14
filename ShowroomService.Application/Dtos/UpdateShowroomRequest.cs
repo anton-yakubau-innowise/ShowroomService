@@ -5,7 +5,6 @@ namespace ShowroomService.Application.Dtos
         string? Address,
         string? City,
         string? Country,
-        string? PhoneNumber,
-        string? OperatingHours
+        string? PhoneNumber
     );
 }

@@ -7,6 +7,7 @@ namespace ShowroomService.Domain.Repositories
     {
         Task<Showroom?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
         Task<Showroom?> GetByAliasAsync(string alias, CancellationToken cancellationToken = default);
+        Task<bool> ExistsWithAddressAsync(string address, string city, string country, CancellationToken cancellationToken = default);
         Task<IEnumerable<Showroom>> ListAllAsync(CancellationToken cancellationToken = default);
         Task<IEnumerable<Showroom>> ListAsync(Expression<Func<Showroom, bool>> predicate, CancellationToken cancellationToken = default);
 

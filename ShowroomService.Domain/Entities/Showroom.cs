@@ -69,12 +69,30 @@ namespace ShowroomService.Domain.Entities
             SetUpdated();
         }
 
-        public void ChangeStatus(ShowroomStatus newStatus)
+        public void Open()
         {
-            Status = newStatus;
-            
+            if (Status == ShowroomStatus.Open)
+                throw new InvalidOperationException("Showroom is already open.");
+            Status = ShowroomStatus.Open;
             SetUpdated();
         }
+
+        public void Close()
+        {
+            if (Status == ShowroomStatus.Closed)
+                throw new InvalidOperationException("Showroom is already closed.");
+            Status = ShowroomStatus.Closed;
+            SetUpdated();
+        }
+
+        public void StartRenovation()
+        {
+            if (Status == ShowroomStatus.Open)
+                throw new InvalidOperationException("Cannot start renovation on an open showroom. Please close it first.");
+            Status = ShowroomStatus.UnderRenovation;
+            SetUpdated();
+        }
+
         public void SetOperatingHours(string hours)
         {
             Guard.AgainstNullOrWhiteSpace(hours, nameof(hours));
