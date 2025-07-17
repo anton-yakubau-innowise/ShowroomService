@@ -20,6 +20,28 @@ namespace ShowroomService.Domain.Entities
         {
         }
 
+        private Showroom(
+            Guid id,
+            string address,
+            string city,
+            string country,
+            string phone,
+            string? alias,
+            ShowroomStatus? status,
+            string? operatingHours)
+        {
+            Id = id;
+            Address = address;
+            City = city;
+            Country = country;
+            PhoneNumber = phone;
+            Alias = alias;
+            Status = status ?? ShowroomStatus.Closed;
+            OperatingHours = operatingHours ?? "9:00 AM - 7:00 PM";
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
         public static Showroom CreateShowroom(
             string address,
             string city,
@@ -34,19 +56,15 @@ namespace ShowroomService.Domain.Entities
             Guard.AgainstNullOrWhiteSpace(country, nameof(country));
             Guard.AgainstNullOrWhiteSpace(phone, nameof(phone));
 
-            return new Showroom
-            {
-                Id = Guid.NewGuid(),
-                Alias = alias,
-                Address = address,
-                City = city,
-                Country = country,
-                PhoneNumber = phone,
-                Status = status ?? ShowroomStatus.Closed,
-                OperatingHours = operatingHours ?? "9:00 AM - 7:00 PM",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            };
+            return new Showroom(
+                Guid.NewGuid(),
+                address,
+                city,
+                country,
+                phone,
+                alias,
+                status,
+                operatingHours);
         }
 
         public void UpdateDetails(string? alias = null, string? phone = null, string? address = null, string? city = null, string? country = null)
