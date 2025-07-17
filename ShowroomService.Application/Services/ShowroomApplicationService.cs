@@ -10,15 +10,11 @@ public class ShowroomApplicationService(IUnitOfWork unitOfWork, IMapper mapper) 
 
     public async Task<ShowroomDto?> GetShowroomByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var showroom = await unitOfWork.Showrooms.GetByIdAsync(id, cancellationToken);
-
-        if (showroom == null)
-        {
-            throw new KeyNotFoundException($"Showroom with ID {id} not found.");
-        }
+        var showroom = await GetShowroomAndEnsureExistsAsync(id, cancellationToken);
 
         return mapper.Map<ShowroomDto>(showroom);
     }
+
     public async Task<IEnumerable<ShowroomDto>> GetAllShowroomsAsync(CancellationToken cancellationToken)
     {
         var showrooms = await unitOfWork.Showrooms.ListAllAsync(cancellationToken);
@@ -55,11 +51,7 @@ public class ShowroomApplicationService(IUnitOfWork unitOfWork, IMapper mapper) 
 
     public async Task UpdateShowroomAsync(Guid id, UpdateShowroomRequest request, CancellationToken cancellationToken)
     {
-        var showroom = await unitOfWork.Showrooms.GetByIdAsync(id, cancellationToken);
-        if (showroom == null)
-        {
-            throw new KeyNotFoundException($"Showroom with ID {id} not found.");
-        }
+        var showroom = await GetShowroomAndEnsureExistsAsync(id, cancellationToken);
 
         showroom.UpdateDetails(
             request.Address,
@@ -73,11 +65,7 @@ public class ShowroomApplicationService(IUnitOfWork unitOfWork, IMapper mapper) 
 
     public async Task DeleteShowroomAsync(Guid id, CancellationToken cancellationToken)
     {
-        var showroom = await unitOfWork.Showrooms.GetByIdAsync(id, cancellationToken);
-        if (showroom == null)
-        {
-            throw new KeyNotFoundException($"Showroom with ID {id} not found.");
-        }
+        var showroom = await GetShowroomAndEnsureExistsAsync(id, cancellationToken);
 
         unitOfWork.Showrooms.Delete(showroom);
         await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -85,11 +73,7 @@ public class ShowroomApplicationService(IUnitOfWork unitOfWork, IMapper mapper) 
 
     public async Task OpenShowroomAsync(Guid id, CancellationToken cancellationToken)
     {
-        var showroom = await unitOfWork.Showrooms.GetByIdAsync(id, cancellationToken);
-        if (showroom == null)
-        {
-            throw new KeyNotFoundException($"Showroom with ID {id} not found.");
-        }
+        var showroom = await GetShowroomAndEnsureExistsAsync(id, cancellationToken);
 
         showroom.Open();
         await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -97,11 +81,7 @@ public class ShowroomApplicationService(IUnitOfWork unitOfWork, IMapper mapper) 
 
     public async Task CloseShowroomAsync(Guid id, CancellationToken cancellationToken)
     {
-        var showroom = await unitOfWork.Showrooms.GetByIdAsync(id, cancellationToken);
-        if (showroom == null)
-        {
-            throw new KeyNotFoundException($"Showroom with ID {id} not found.");
-        }
+        var showroom = await GetShowroomAndEnsureExistsAsync(id, cancellationToken);
 
         showroom.Close();
         await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -109,11 +89,7 @@ public class ShowroomApplicationService(IUnitOfWork unitOfWork, IMapper mapper) 
 
     public async Task RenovateShowroomAsync(Guid id, CancellationToken cancellationToken)
     {
-        var showroom = await unitOfWork.Showrooms.GetByIdAsync(id, cancellationToken);
-        if (showroom == null)
-        {
-            throw new KeyNotFoundException($"Showroom with ID {id} not found.");
-        }
+        var showroom = await GetShowroomAndEnsureExistsAsync(id, cancellationToken);
 
         showroom.StartRenovation();
         await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -121,13 +97,23 @@ public class ShowroomApplicationService(IUnitOfWork unitOfWork, IMapper mapper) 
 
     public async Task UpdateOperatingHoursAsync(Guid id, UpdateOperatingHoursRequest request, CancellationToken cancellationToken)
     {
+        var showroom = await GetShowroomAndEnsureExistsAsync(id, cancellationToken);
+
+        showroom.SetOperatingHours(request.OperatingHours);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
+
+
+    private async Task<Showroom> GetShowroomAndEnsureExistsAsync(Guid id, CancellationToken cancellationToken)
+    {
         var showroom = await unitOfWork.Showrooms.GetByIdAsync(id, cancellationToken);
+
         if (showroom == null)
         {
             throw new KeyNotFoundException($"Showroom with ID {id} not found.");
         }
 
-        showroom.SetOperatingHours(request.OperatingHours);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        return showroom;
     }
 }

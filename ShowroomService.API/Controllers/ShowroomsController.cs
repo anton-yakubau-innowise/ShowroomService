@@ -32,7 +32,7 @@ public class ShowroomsController(IShowroomApplicationService showroomService) : 
         return CreatedAtAction(nameof(GetShowroomById), new { id = showroomId }, showroomId);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPatch("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

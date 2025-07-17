@@ -35,6 +35,7 @@ namespace ShowroomService.Infrastructure.Persistence.Configuration
                 .HasMaxLength(50);
 
             builder.Property(s => s.Status)
+                .IsRequired()
                 .HasConversion<string>()
                 .HasMaxLength(50);
         }
