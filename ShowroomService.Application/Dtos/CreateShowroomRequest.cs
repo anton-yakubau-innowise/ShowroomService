@@ -1,11 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ShowroomService.Application.Dtos
 {
     public record CreateShowroomRequest(
         string? Alias,
-        string Address,
-        string City,
-        string Country,
-        string PhoneNumber,
-        string OperatingHours
+        [Required] string Address,
+        [Required] string City,
+        [Required] string Country,
+        [Required] string PhoneNumber,
+        [Required] string OperatingHours
     );
 }

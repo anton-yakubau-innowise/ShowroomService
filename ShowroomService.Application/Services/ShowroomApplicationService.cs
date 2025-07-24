@@ -109,7 +109,7 @@ public class ShowroomApplicationService(IUnitOfWork unitOfWork, IMapper mapper) 
     {
         var showroom = await unitOfWork.Showrooms.GetByIdAsync(id, cancellationToken);
 
-        if (showroom == null)
+        if (showroom is null)
         {
             throw new KeyNotFoundException($"Showroom with ID {id} not found.");
         }

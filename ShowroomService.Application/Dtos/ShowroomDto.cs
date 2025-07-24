@@ -1,6 +1,3 @@
-using System;
-using ShowroomService.Domain.Entities;
-
 namespace ShowroomService.Application.Dtos
 {
     public record ShowroomDto(

@@ -26,7 +26,7 @@ namespace ShowroomService.Infrastructure.Persistence.Repositories
             return await dbContext.Showrooms.AnyAsync(s => 
                 s.Address == address && s.City == city && s.Country == country, 
                 cancellationToken);
-}
+        }
 
         public async Task<IEnumerable<Showroom>> ListAllAsync(CancellationToken cancellationToken = default)
         {
