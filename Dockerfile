@@ -22,7 +22,7 @@ RUN dotnet publish "ShowroomService.API.csproj" -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
-COPY --from=build /src/ShowroomService.API/app/publish .
+COPY --from=build /app/publish .
 
 
 ENTRYPOINT ["dotnet", "ShowroomService.API.dll"]

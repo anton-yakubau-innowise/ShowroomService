@@ -54,11 +54,11 @@ public class ShowroomApplicationService(IUnitOfWork unitOfWork, IMapper mapper) 
         var showroom = await GetShowroomAndEnsureExistsAsync(id, cancellationToken);
 
         showroom.UpdateDetails(
+            request.Alias,
+            request.PhoneNumber,
             request.Address,
             request.City,
-            request.Country,
-            request.PhoneNumber,
-            request.Alias);
+            request.Country);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
