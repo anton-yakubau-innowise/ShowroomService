@@ -11,7 +11,6 @@ namespace ShowroomService.Infrastructure.Persistence.Configuration
             builder.HasKey(s => s.Id);
 
             builder.Property(s => s.Alias)
-                .IsRequired()
                 .HasMaxLength(100);
 
             builder.Property(s => s.Address)
@@ -31,7 +30,6 @@ namespace ShowroomService.Infrastructure.Persistence.Configuration
                 .HasMaxLength(15);
                 
             builder.Property(s => s.OperatingHours)
-                .IsRequired()
                 .HasMaxLength(50);
 
             builder.Property(s => s.Status)
