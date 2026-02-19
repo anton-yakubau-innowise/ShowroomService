@@ -1,7 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using ShowroomService.Application.Interfaces;
-using ShowroomService.Application.Services;
+using MediatR;
 
 namespace ShowroomService.Application
 {
@@ -11,7 +10,7 @@ namespace ShowroomService.Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<IShowroomApplicationService, ShowroomApplicationService>();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             return services;
         }
