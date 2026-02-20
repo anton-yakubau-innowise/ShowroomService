@@ -5,11 +5,11 @@ using ShowroomService.Domain.Entities;
 namespace ShowroomService.Application.Features.Commands;
 
 public record CreateShowroomCommand(
+    string? Alias,
     string Address,
     string City,
     string Country,
     string PhoneNumber,
-    string Alias,
     string OperatingHours
 ) : IRequest<Guid>;
 
@@ -29,12 +29,12 @@ public class CreateShowroomCommandHandler(IUnitOfWork unitOfWork) : IRequestHand
         }
 
         var showroom = Showroom.CreateShowroom(
-            request.Address,
-            request.City,
-            request.Country,
-            request.PhoneNumber,
-            request.Alias,
-            request.OperatingHours);
+            address: request.Address,
+            city: request.City,
+            country: request.Country,
+            phone: request.PhoneNumber,
+            alias: request.Alias,
+            operatingHours: request.OperatingHours);
 
         await unitOfWork.Showrooms.AddAsync(showroom, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
