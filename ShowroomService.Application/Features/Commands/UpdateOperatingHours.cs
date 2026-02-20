@@ -1,10 +1,11 @@
+using System.Text.Json.Serialization;
 using MediatR;
 using ShowroomService.Application.Extensions;
 using ShowroomService.Application.Interfaces;
 
 namespace ShowroomService.Application.Features.Commands;
 
-public record UpdateOperatingHoursCommand(Guid Id, string OperatingHours) : IRequest;
+public record UpdateOperatingHoursCommand([property: JsonIgnore]Guid Id, string OperatingHours) : IRequest;
 
 public class UpdateOperatingHoursCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateOperatingHoursCommand>
 {

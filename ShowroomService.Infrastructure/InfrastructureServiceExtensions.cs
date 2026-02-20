@@ -17,6 +17,7 @@ public static class InfrastructureServiceExtensions
 
         services.AddScoped<IShowroomRepository, ShowroomRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
 
         return services;
     }
